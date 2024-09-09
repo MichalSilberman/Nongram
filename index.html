@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="app.js" defer></script>
+    <style>
+        @media (max-width: 360px) {
+            .card {
+                --num-card: 1;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            margin: 0 auto;
+            --columns: 10;
+            --rows: 10;
+            width: fit-content;
+            display: grid;
+            grid-template-columns: 1fr repeat(var(--columns), 2em);
+            grid-template-rows: 1fr repeat(var(--rows), 2em);
+
+            border: solid blue 2px;
+        }
+
+        .container>div {
+            border: solid black 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container>div:hover {
+            background-color: #ccc;
+        }
+
+        .check {
+            background-color: black;
+        }
+
+        .container>div.check:hover {
+            background-color: #555;
+        }
+
+        .container>div.border-top {
+            border-top: solid black 4px;
+        }
+
+        .container>div.border-left {
+            border-left: solid black 4px;
+        }
+
+        .cell-header {
+            border: solid black 1px;
+            background-color: rgba(0, 128, 0, 0.377);
+            display: flex;
+            align-items: center;
+            justify-content: end !important;
+        }
+
+
+        [data-col-header] {
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="number" name="columns">
+    <input type="number" name="rows" id="">
+    <button id="create">create</button>
+
+</body>
+
+</html>
