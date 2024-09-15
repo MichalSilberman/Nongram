@@ -74,26 +74,34 @@ class GameBoard {
     }
 
     addRowToMatrix() {
-        
+
     }
 
 }
 
-const game = new GameBoard(12, 9)
-let matrix = game.prepare()
+// document.querySelector('#create').addEventListener('submit', (ev) => {
+//     ev.preventDefault
+
+//     const game = new GameBoard(12, 9)
+//     let matrix = game.prepare()
+//     uiTheCells('create')
+
+// })
+
+let game
 
 function uiTheCells(type) {
 
     let container = document.createElement('div')
 
-    container.setAttribute('style', `--columns: ${matrix[0].length}; --rows: ${matrix.length};`)
+    container.setAttribute('style', `--columns: ${game.matrix[0].length}; --rows: ${game.matrix.length};`)
 
     container.classList.add('container')
 
     let emptyCell = document.createElement('div')
-    emptyCell.innerText = 'empty'
+    emptyCell.innerText = 'xx'
 
-    let colscells = matrix[0].map((group, index) => {
+    let colscells = game.matrix[0].map((group, index) => {
         let cellHeader = document.createElement('div')
 
         if (type === 'edit')
@@ -105,23 +113,27 @@ function uiTheCells(type) {
         else
             cellHeader.innerText = ''
         cellHeader.dataset.colHeader = index
-        cellHeader.classList.add('cell-header')
+        cellHeader.classList.add('cell-header', 'col')
         return cellHeader
     })
 
     container.append(emptyCell, ...colscells)
-
-    matrix.forEach((row, rindex) => {
+    let callsCount = 0
+    game.matrix.forEach((row, rindex) => {
         let cellHeader = document.createElement('div')
         cellHeader.innerText = (type === 'edit') ? game.rowsGroups[rindex].join(',') : ''
         cellHeader.dataset.rowHeader = rindex
         cellHeader.classList.add('cell-header')
-        container.append(cellHeader)
+
+        let span = document.createElement('span')
+        span.classList.add('add-row')
+        span.innerText = "add row"
+        container.append(cellHeader, span)
 
         let rowcelss = row.map((cell, cindex) => {
 
             let cellElm = document.createElement('div')
-            cellElm.innerText = (rindex) * 10 + (cindex + 1)
+            cellElm.innerText = ++callsCount
             cellElm.dataset.col = cindex
             cellElm.dataset.row = rindex
             if (rindex % 5 == 0) {
@@ -129,7 +141,7 @@ function uiTheCells(type) {
             }
             if (cindex % 5 == 0)
                 cellElm.classList.add('border-left')
-            if (matrix[rindex][cindex])
+            if (game.matrix[rindex][cindex])
                 cellElm.classList.add('check')
             cellElm.addEventListener('click', (e) => {
                 game.changeMatrix(e.currentTarget.dataset.col, e.currentTarget.dataset.row)
@@ -144,13 +156,11 @@ function uiTheCells(type) {
     }
     else document.body.append(container)
 }
-uiTheCells('create')
 
-let columnsInput = document.querySelector('[name=columns]')
-let columnsVal = document.querySelector('[name=columns]').value
+let columnsInput = document.querySelector('[id=columns]')
+columnsInput.focus()
 
-let rowsInput = document.querySelector('[name=rows]')
-let rowsVal = document.querySelector('[name=rows]').value
+let rowsInput = document.querySelector('[id=rows]')
 // rowsInput.addEventListener('change', (e))
 
 
@@ -158,8 +168,12 @@ document.querySelector('#create').addEventListener('click', () => {
     let columnsVal = columnsInput.value
     let rowsVal = rowsInput.value
 
-    var game = new GameBoard(columnsVal, rowsVal)
+    game = new GameBoard(columnsVal, rowsVal)
     console.log(game.width, game.height)
+    game.prepare()
+    uiTheCells('create')
+    document.querySelector('.add-row').addEventListener('hover', () => {
+        console.log('hoverd')
+    })
 })
 
- 

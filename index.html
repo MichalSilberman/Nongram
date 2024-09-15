@@ -62,20 +62,59 @@
             display: flex;
             align-items: center;
             justify-content: end !important;
+            position: relative;
         }
 
 
         [data-col-header] {
             flex-direction: column;
         }
+
+
+        .cell-header+.add-row {
+            visibility: hidden;
+            /* display: none; */
+            position: absolute;
+        }
+
+        .cell-header:hover+.add-row {
+            visibility: visible;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 20px;
+            background-color: #414141;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .cell-header:hover+.add-row {
+            right: 100%;
+        }
+
+        .cell-header:hover.col::before {
+            content: "add column";
+            bottom: 100%;
+        }
+
+        .cell-header:hover+.add-row:hover {
+            content: "add row";
+            background-color: #b30b9a;
+
+        }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <input type="number" name="columns">
-    <input type="number" name="rows" id="">
-    <button id="create">create</button>
+    <h1>Nongram </h1>
+    <h2>הגדר גודל לוח</h2>
+    <label for="columns">עמודות</label>
+    <input type="number" id="columns">
+    <label for="rows">שורות</label>
+    <input type="number" id="rows">
 
+    <button type="submit" id="create">צור לוח חדש</button>
+    <span id="bg-credit">Photo by <a href="https://unsplash.com/@xaprrr?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Aleksandra Khaprenko</a> on <a href="https://unsplash.com/photos/a-very-pretty-blue-and-white-marble-texture-0PPw9irzLIw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></span>
 </body>
 
 </html>
